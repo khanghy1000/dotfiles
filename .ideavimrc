@@ -1,0 +1,121 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+set quickscope
+set mini-ai
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+Plug 'tpope/vim-surround'
+
+Plug 'preservim/nerdtree'
+
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+
+set hlsearch
+set clipboard=unnamedplus,unnamed,ideaput
+set number relativenumber
+
+let mapleader = " "
+
+map q <Nop>
+map q <Nop>
+
+nnoremap <Esc> :noh<CR>
+nnoremap <C-c> :noh<CR>
+
+nnoremap D "_dd
+vnoremap D "_d
+
+vnoremap P "_dP`]
+
+"" paste then move cursor to last pasted line
+nnoremap p p`]
+vnoremap p p`]
+
+nnoremap <leader>q :q<CR>
+
+nnoremap \ :NERDTree<CR>
+
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+nnoremap { {zz
+nnoremap } }zz
+
+nnoremap <CR> <Nop>
+
+nnoremap <leader>ba :action CloseAllEditorsButActive<CR>
+
+inoremap <C-.> :action CodeCompletion<CR>
+
+nnoremap <leader>k :action ShowErrorDescription<CR>
+
+nnoremap <M-p> :action PreviousTab<CR>
+nnoremap <M-n> :action NextTab<CR>
+
+""nnoremap J :action MoveLineDown<CR>
+vnoremap J :action MoveLineDown<CR>
+""nnoremap K :action MoveLineUp<CR>
+vnoremap K :action MoveLineUp<CR>
+
+nnoremap <leader>sf :action GotoFile<CR>
+
+nnoremap <leader>/ :action CommentByLineComment<CR>
+vnoremap <leader>/ :action CommentByLineComment<CR>
+
+nnoremap <leader>fm :action ReformatCode<CR> :action OptimizeImports<CR>
+
+nnoremap <leader>a :action PinActiveTab<CR>
+
+nnoremap grf :action Refactorings.QuickListPopupAction<CR>
+nnoremap gra :action ShowIntentionActions<CR>
+nnoremap gW :action GotoSymbol<CR>
+nnoremap grd :action GotoDeclaration<CR>
+nnoremap gri :action GotoImplementation<CR>
+nnoremap ga :action GotoAction<CR>
+nnoremap grn :action RenameElement<CR>
+nnoremap grt :action GotoTypeDeclaration<CR>
+
+nnoremap [d :action GotoPreviousError<CR>
+nnoremap ]d :action GotoNextError<CR>
+nnoremap <leader>db :action ActivateProblemsViewToolWindow<CR>
+nnoremap <leader>dw :action ActivateProblemsViewToolWindow<CR>
+
+nnoremap za :action ExpandCollapseToggleAction<CR>
+
+"nnoremap :w<CR> :action Macro.save_macro<CR>
+"vnoremap :w<CR> :action Macro.save_macro<CR>
+
+nmap s <Action>(flash.search)
+xmap s <Action>(flash.search)
+
+command! Bd action CloseAllUnpinnedEditors

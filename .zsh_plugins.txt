@@ -1,0 +1,21 @@
+mattmc3/ez-compinit
+zsh-users/zsh-completions
+
+zsh-users/zsh-autosuggestions
+zdharma-continuum/fast-syntax-highlighting
+zsh-users/zsh-history-substring-search
+
+belak/zsh-utils path:editor
+belak/zsh-utils path:history
+belak/zsh-utils path:utility
+
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib/clipboard.zsh
+ohmyzsh/ohmyzsh path:lib/termsupport.zsh
+ohmyzsh/ohmyzsh path:plugins/nvm
+ohmyzsh/ohmyzsh path:plugins/fzf
+ohmyzsh/ohmyzsh path:plugins/starship
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/zoxide
+ohmyzsh/ohmyzsh path:plugins/bun
+
