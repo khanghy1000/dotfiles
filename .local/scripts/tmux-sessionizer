@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    mapfile -t repo_dirs < <(find -L "$HOME/repos" "$HOME/projects" -mindepth 1 -maxdepth 2 -type d)
+    mapfile -t config_dirs < <(find -L "$HOME/.config" -mindepth 1 -maxdepth 1 -type d)
+    dirs=("$HOME" "$HOME/Downloads" "$HOME/Documents" "${repo_dirs[@]}" "${config_dirs[@]}")
+    selected=$(printf "%s\n" "${dirs[@]}" | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+if [[ $selected == "$HOME" ]]; then
+    selected_name=$HOME
+else
+    selected_name=$(basename "$(dirname "$selected")")/$(basename "$selected")
+    selected_name=$(echo "$selected_name" | tr . _)
+fi
+
+tmux_running=$(pgrep tmux)
+
+# tmux is not running
+if [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c "$selected"
+    exit 0
+fi
+
+# tmux is running but client is not attached, session with selected_name does not exist
+if [[ -z $TMUX ]] && ! tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux new-session -s $selected_name -c "$selected"
+    exit 0
+fi
+
+# tmux is running but client is not attached, session with selected_name exists
+if [[ -z $TMUX ]] && tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux a -t $selected_name
+    exit 0
+fi
+
+# tmux is running and client is attached, session with selected_name does not exist
+if [[ ! -z $TMUX ]] && ! tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux new-session -ds $selected_name -c "$selected"
+    tmux switch-client -t $selected_name
+    exit 0
+fi
+
+# tmux is running and client is attached, session with selected_name exists
+if [[ ! -z $TMUX ]] && tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux switch-client -t $selected_name
+    exit 0
+fi
