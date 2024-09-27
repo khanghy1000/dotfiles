@@ -1,0 +1,111 @@
+#!/bin/bash
+
+RED="\e[31m"
+GREEN="\e[32m"
+YELLOW="\e[33m"
+ENDCOLOR="\e[0m"
+
+system_type=$(uname -s)
+if ! [[ "$system_type" = "Linux" ]]; then
+    echo -e "${RED}This script must be run on Linux!${ENDCOLOR}" 1>&2
+    exit 1
+fi
+
+echo
+echo -e "${GREEN}Installing packages...${ENDCOLOR}"
+echo
+
+pkgs=(zsh curl git make zip unzip gcc ripgrep xclip base-devel tmux fzf
+    openssh openssh-client openssh-server bat tree jq neovim yazi
+    ffmpegthumbnailer p7zip poppler fd zoxide imagemagick inotify-tools btop
+    fastfetch blueman network-manager-applet pamixer pavucontrol)
+
+# apt
+if command -v apt-get >/dev/null 2>&1; then
+    sudo apt-get update
+    sudo apt-get upgrade -y
+
+    for pkg in "${pkgs[@]}"; do
+        sudo apt-get -y --ignore-missing install "$pkg"
+    done
+
+# zypper
+elif command -v zypper >/dev/null 2>&1; then
+    sudo zypper refresh
+    sudo zypper update -y -l
+
+    for pkg in "${pkgs[@]}"; do
+	sudo zypper install -y -l "$pkg"
+    done
+
+# pacman
+elif command -v pacman >/dev/null 2>&1; then
+    sudo pacman -Syu --noconfirm
+
+    for pkg in "${pkgs[@]}"; do
+        sudo pacman -S --needed --noconfirm "$pkg"
+    done
+
+    if ! command -v yay >/dev/null 2>&1; then
+        echo -e "${GREEN}Installing yay...${ENDCOLOR}"
+        git clone https://aur.archlinux.org/yay.git
+        cd yay
+        makepkg -si
+    fi
+
+# dnf
+elif command -v dnf >/dev/null 2>&1; then
+    sudo dnf upgrade --refresh -y
+
+    for pkg in "${pkgs[@]}"; do
+        sudo dnf install -y --skip-unavailable "$pkg"
+    done
+    fi
+
+echo
+echo -e "${GREEN}Installing JetBrainsMono Nerd Font...${ENDCOLOR}"
+echo
+
+mkdir -p ~/.local/share/fonts
+curl -L -o ~/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+unzip ~/JetBrainsMono.zip -d ~/.local/share/fonts
+rm ~/JetBrainsMono.zip
+fc-cache -fv
+
+echo
+echo -e "${GREEN}Installing nvm...${ENDCOLOR}"
+echo
+PROFILE=/dev/null bash -c "$(curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh)"
+
+
+echo
+echo -e "${GREEN}Installing tpm...${ENDCOLOR}"
+echo
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+echo
+echo -e "${GREEN}Installing starship...${ENDCOLOR}"
+echo
+curl -sS https://starship.rs/install.sh | sh
+
+echo
+echo -e "${GREEN}Setting up zsh...${ENDCOLOR}"
+echo
+
+ZSH_PATH=$(which zsh)
+
+if [[ $ZSH_PATH =~ "sbin" ]]; then
+    ZSH_PATH="${ZSH_PATH//sbin/bin}"
+    echo -e "${YELLOW}warning:${ENDCOLOR} zsh path includes 'sbin'. Trying to change shell to $ZSH_PATH..."
+fi
+
+chsh -s $ZSH_PATH
+git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+
+echo
+echo "----------------------------------------"
+echo
+echo -e "${GREEN}Restart your terminal to apply changes!${ENDCOLOR}"
+echo
+echo "----------------------------------------"
+echo

@@ -1,0 +1,77 @@
+#!/usr/bin/env zsh
+
+addToPath() {
+    if [[ "$PATH" != *"$1"* ]]; then
+        export PATH=$PATH:$1
+    fi
+}
+
+addToPathFront() {
+    if [[ "$PATH" != *"$1"* ]]; then
+        export PATH=$1:$PATH
+    fi
+}
+
+venv() {
+    if ! command -v python3 >/dev/null 2>&1 && ! command -v python >/dev/null 2>&1; then
+        echo "Python not found."
+        return
+    fi
+
+    if [[ ! -f .venv/bin/activate && ! -f .venv/Scripts/activate ]]; then
+        python3 -m venv .venv || python -m venv .venv
+        echo "Virtual environment created."
+    fi
+
+    if [[ -f .venv/bin/activate ]]; then
+        source .venv/bin/activate
+    elif [[ -f .venv/Scripts/activate ]]; then
+        source .venv/Scripts/activate
+    else
+        echo "Activation script not found."
+    fi
+}
+
+ff() {
+    typeset -a dirs
+    repo_dirs=( "${(@f)$(find -L "$HOME/repos" "$HOME/projects" -mindepth 1 -maxdepth 2 -type d)}" )
+    config_dirs=( "${(@f)$(find -L "$HOME/.config" -mindepth 1 -maxdepth 1 -type d)}" )
+    dirs=( "$HOME" "$HOME/Downloads" "$HOME/Documents" "${repo_dirs[@]}" "${config_dirs[@]}" )
+    selected=$(print -rl -- "${dirs[@]}" | fzf)
+
+    if [[ -z $selected ]]; then
+        return
+    fi
+
+    system_type=$(uname -s)
+    if [[ "$system_type" = "Linux" ]]; then
+        z "$selected"
+    else
+        z -- "$selected"
+    fi
+}
+
+y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    system_type=$(uname -s)
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        if [[ "$system_type" = "Linux" ]]; then
+            z "$cwd"
+        else
+            z -- "$cwd"
+        fi
+    fi
+    rm -f -- "$tmp"
+}
+
+vh() {
+    local repo="$HOME/.config/nvim"
+    local tmpdir="$HOME/tmp/nvim"
+
+    [[ -d "$tmpdir" ]] && git -C "$repo" worktree remove --force "$tmpdir"
+    git -C "$repo" worktree add "$tmpdir" HEAD || return
+    nvim -u "$tmpdir/init.lua" --cmd "set runtimepath^=$tmpdir"
+    git -C "$repo" worktree remove --force "$tmpdir"
+}
+

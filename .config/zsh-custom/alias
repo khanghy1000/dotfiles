@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+alias v="nvim"
+alias gg="lazygit"
+alias yadmauto="yadm add -u && yadm commit -m 'Sync dotfiles' && yadm push"
+alias tree="tree -Ca --dirsfirst -I 'node_modules|dist|build|out|target|.venv|bin|obj|.idea|.git/' | less -FRi"
+alias ts="tmux-sessionizer"
+alias rshada="rm -rf $HOME/AppData/Local/nvim-data/shada/* && rm -rf $HOME/.local/share/nvim/shada/*"
+alias yadmgg='lazygit -ucf "$HOME/.config/yadm/lazygit.yaml,$HOME/.config/lazygit/config.yml" -w ~ -g ~/.local/share/yadm/repo.git'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+# alias ls='ls --color=tty --group-directories-first'
+
+# Replace ls with eza
+alias ls='eza -al --color=always --group-directories-first --icons' # preferred listing
+alias la='eza -a --color=always --group-directories-first --icons'  # all files and dirs
+alias ll='eza -l --color=always --group-directories-first --icons'  # long format
+alias lt='eza -aT -I "node_modules|dist|build|out|target|.venv|bin|obj|.idea|.git" --color=always --group-directories-first --icons | less -FRi' # tree listing
+alias l.="eza -a | grep -e '^\.'"                                   # show only dotfiles
+
+if command -v batcat >/dev/null 2>&1; then
+    alias bat="batcat"
+fi

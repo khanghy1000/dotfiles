@@ -1,0 +1,164 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "modules-left": [
+    "custom/launcher",
+    "niri/workspaces",
+    "wlr/taskbar"
+  ],
+  "modules-center": ["clock"],
+  // "modules-center": ["niri/window"],
+  "modules-right": [
+    "tray",
+    "battery",
+    "memory",
+    "backlight",
+    "pulseaudio",
+    "pulseaudio#microphone",
+    "network",
+    "custom/lock_screen",
+    "custom/power_btn",
+  ],
+
+  "custom/launcher": {
+    "format": "",
+    "on-click": "fuzzel",
+    "tooltip": false,
+  },
+
+  "custom/lock_screen": {
+    "format": "",
+    "on-click": "swaylock --indicator-idle-visible",
+    "tooltip": false,
+  },
+
+  "custom/power_btn": {
+    "format": "",
+    "on-click": "wlogout",
+    "tooltip": false,
+  },
+
+  "tray": {
+    "icon-size": 14,
+    "spacing": 10,
+    "cursor": true,
+  },
+
+  "niri/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "",
+      "default": ""
+    },
+    "cursor": true,
+  },
+
+  "wlr/taskbar": {
+    // "all-outputs": true,
+    "format": "{icon}",
+    "tooltip-format": "{title} | {app_id}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "on-click-right": "fullscreen",
+    "height": "10",
+    "icon-size": 16,
+    "spacing": 10,
+    "cursor": true,
+  },
+
+  "clock": {
+    "format": "{:%a, %B %d, %Y | %H:%M}",
+    "tooltip-format": "<big>{calendar}</big>",
+    "calendar": {
+      "mode"          : "month",
+      // "weeks-pos"     : "right",
+      "mode-mon-col"  : 3,
+      "on-scroll"     : 1,
+      "format": {
+        "months":     "<span color='#8aadf4'><b>{}</b></span>",
+        "days":       "<span color='#cad3f5'><b>{}</b></span>",
+        "weeks":      "<span color='#8bd5ca'><b>W{}</b></span>",
+        "weekdays":   "<span color='#91d7e3'><b>{}</b></span>",
+        "today":      "<span color='#c6a0f6'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions":  {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    //   "device": "intel_backlight",
+    //   "on-scroll-up": "~/.config/waybar/scripts/brightness --inc",
+    //   "on-scroll-down": "~/.config/waybar/scripts/brightness --dec",
+    // "min-length": 6,
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20,
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+  },
+
+  "memory": {
+    "interval": 30,
+    "format": " {used:0.1f}G/{total:0.1f}G"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "on-click": "~/.config/waybar/scripts/volume --toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "~/.config/waybar/scripts/volume --inc",
+    "on-scroll-down": "~/.config/waybar/scripts/volume --dec",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""],
+    },
+  },
+
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": "",
+    "on-click": "~/.config/waybar/scripts/volume --toggle-mic",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "~/.config/waybar/scripts/volume --mic-inc",
+    "on-scroll-down": "~/.config/waybar/scripts/volume --mic-dec",
+    "scroll-step": 5,
+  },
+
+  "network": {
+    // "format-wifi": "󰤢 {essid}",
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format-wifi": "{icon} {essid}",
+    "format-ethernet": "󰈀 Ethernet",
+    "format-linked": "󰈀 No IP ⚠",
+    "format-disconnected": "󰤠 Disconnected",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "{ipaddr}"
+  },
+}
