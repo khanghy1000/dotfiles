@@ -1,0 +1,10 @@
+[Unit]
+Description=Redirect Brightness Service
+After=multi-user.target
+
+[Service]
+ExecStart=sudo /usr/local/bin/redirect-brightness
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

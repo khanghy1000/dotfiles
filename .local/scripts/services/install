@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+sudo cp $HOME/.local/scripts/services/disable-turbo-boost.service /etc/systemd/system/disable-turbo-boost.service
+sudo systemctl enable disable-turbo-boost.service
+sudo systemctl start disable-turbo-boost.service
+
+sudo cp $HOME/.local/scripts/redirect-brightness /usr/local/bin/redirect-brightness
+sudo cp $HOME/.local/scripts/services/redirect-brightness.service /etc/systemd/system/redirect-brightness.service
+# sudo systemctl enable redirect-brightness.service
+# sudo systemctl start redirect-brightness.service

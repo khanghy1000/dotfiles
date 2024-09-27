@@ -1,0 +1,26 @@
+[user]
+	name = khanghy1000
+	email = 46063255+khanghy1000@users.noreply.github.com
+	signingkey = ~/.ssh/id_ed25519.pub
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[pull]
+	rebase = false
+[core]
+	eol = lf
+	autocrlf = input
+	fsmonitor = true
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[lfs]
+	concurrenttransfers = 3
+[lfs "customtransfer.xet"]
+	path = git-xet
+	args = transfer
+	concurrent = true
+[merge]
+	conflictStyle = zdiff3
