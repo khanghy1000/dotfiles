@@ -54,6 +54,8 @@ nnoremap <C-c> :noh<CR>
 nnoremap D "_dd
 vnoremap D "_d
 
+vnoremap P "_dP`]
+
 "" paste then move cursor to last pasted line
 nnoremap p p`]
 vnoremap p p`]
