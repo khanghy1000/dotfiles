@@ -120,7 +120,7 @@ function open(path) {
             command = 'open';
             break;
         case 'win32':
-            command = 'explorer';
+            command = 'open ""';
             break;
         default:
             command = 'xdg-open';
