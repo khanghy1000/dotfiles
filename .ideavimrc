@@ -88,8 +88,8 @@ vnoremap K :action MoveLineUp<CR>
 
 nnoremap <leader>sf :action GotoFile<CR>
 
-nnoremap <leader>/ :action CommentByLineComment<CR><esc>
-vnoremap <leader>/ :action CommentByLineComment<CR><esc>
+nnoremap <leader>/ :action CommentByLineComment<CR>
+vnoremap <leader>/ :action CommentByLineComment<CR>
 
 nnoremap <leader>ca :action ShowIntentionActions<CR>
 
