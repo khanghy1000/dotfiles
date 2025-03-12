@@ -4,9 +4,11 @@ const fs = require('fs');
 const child_process = require('child_process');
 const readline = require('readline');
 
-const loginUrl = 'https://uis.ptithcm.edu.vn/api/auth/login';
+const baseUrl = 'https://uis.ptithcm.edu.vn';
+const loginUrl = baseUrl + '/api/auth/login';
 const getDsDiemUrl =
-    'https://uis.ptithcm.edu.vn/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
+    baseUrl + '/api/srm/w-locdsdiemsinhvien?hien_thi_mon_theo_hkdk=false';
+const svInfoUrl = baseUrl + '/api/dkmh/w-locsinhvieninfo';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -18,7 +20,7 @@ rl._writeToOutput = (s) => {
 
     if (['\r\n', '\n', '\r'].includes(s)) return rl.output.write(s);
 
-    const question = "Enter password: ";
+    const question = 'Enter password: ';
     const v = s.split(question);
     if (v.length == '2') {
         rl.output.write(question);
@@ -52,6 +54,19 @@ async function main(username, password) {
         const loginData = await loginRes.json();
         const token = loginData.access_token;
 
+        const svInfoRes = await fetch(svInfoUrl, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!svInfoRes.ok) {
+            throw new Error('Get sv info failed');
+        }
+
+        const svInfoData = await svInfoRes.json();
+
         const dsDiemRes = await fetch(getDsDiemUrl, {
             method: 'POST',
             headers: {
@@ -64,7 +79,10 @@ async function main(username, password) {
         }
 
         const dsDiemData = await dsDiemRes.json();
-        const htmlContent = generateHtml(dsDiemData.data.ds_diem_hocky);
+        const htmlContent = generateHtml(
+            svInfoData.data,
+            dsDiemData.data.ds_diem_hocky
+        );
         fs.writeFileSync('result.html', htmlContent);
         open('result.html');
     } catch (error) {
@@ -73,9 +91,20 @@ async function main(username, password) {
     }
 }
 
-function generateHtml(dsDiemHocKy) {
-    let html =
-        '<html><head><title>Danh sách điểm</title><style>td, th { padding: 8px; }</style></head><body>';
+function generateHtml(svInfo, dsDiemHocKy) {
+    let html = `
+        <html>
+            <head>
+                <title>Danh sách điểm</title>
+                <style>td, th { padding: 8px; }</style>
+            </head>
+            <body>`;
+
+    html += `
+        <h3>Họ tên: ${svInfo.ten_day_du}</h3>
+        <h3>MSSV: ${svInfo.ma_sv}</h3>
+        <hr />`;
+
     dsDiemHocKy.forEach((hocKy) => {
         html += '<h2>' + hocKy.ten_hoc_ky + '</h2>';
         html += '<table border="1"><tr>';
@@ -105,18 +134,35 @@ function generateHtml(dsDiemHocKy) {
             html += '<td>' + (monHoc.diem_tk_chu ?? '') + '</td>';
             html += '<td>' + (monHoc.ket_qua ? 'Đạt' : 'Không đạt') + '</td>';
             html += '<td>';
-            monHoc.ds_diem_thanh_phan.forEach((tp) => {
-                html +=
-                    tp.ten_thanh_phan +
-                    ': ' +
-                    tp.trong_so +
-                    ', ' +
-                    tp.diem_thanh_phan +
-                    '<br>';
-            });
+            if (
+                monHoc.ds_diem_thanh_phan &&
+                monHoc.ds_diem_thanh_phan.length > 0
+            ) {
+                html += `
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Thành phần</th>
+                            <th>Trọng số</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+                monHoc.ds_diem_thanh_phan.forEach((tp) => {
+                    html += '<tr>';
+                    html += '<td>' + tp.ten_thanh_phan + '</td>';
+                    html += '<td>' + tp.trong_so + '</td>';
+                    html += '<td>' + tp.diem_thanh_phan + '</td>';
+                    html += '</tr>';
+                });
+                html += '</tbody></table>';
+            }
+
             html += '</td>';
-            html += '</tr>';
         });
+
+        html += '</tr>';
         html += '</table>';
     });
     html += '</body></html>';
