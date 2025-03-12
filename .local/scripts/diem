@@ -13,9 +13,19 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-rl._writeToOutput = function _writeToOutput(stringToWrite) {
-    if (rl.stdoutMuted && stringToWrite.trim() !== '') rl.output.write('*');
-    else rl.output.write(stringToWrite);
+rl._writeToOutput = (s) => {
+    if (!rl.stdoutMuted) return rl.output.write(s);
+
+    if (['\r\n', '\n', '\r'].includes(s)) return rl.output.write(s);
+
+    const question = "Enter password: ";
+    const v = s.split(question);
+    if (v.length == '2') {
+        rl.output.write(question);
+        rl.output.write('*'.repeat(v[1].length));
+    } else {
+        rl.output.write('*');
+    }
 };
 
 rl.question('Enter username: ', (user) => {
