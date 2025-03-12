@@ -65,7 +65,7 @@ async function main(username, password) {
 
 function generateHtml(dsDiemHocKy) {
     let html =
-        '<html><head><title>DS Diem</title><style>td, th { padding: 8px; }</style></head><body>';
+        '<html><head><title>Danh sách điểm</title><style>td, th { padding: 8px; }</style></head><body>';
     dsDiemHocKy.forEach((hocKy) => {
         html += '<h2>' + hocKy.ten_hoc_ky + '</h2>';
         html += '<table border="1"><tr>';
