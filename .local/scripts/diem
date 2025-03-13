@@ -118,7 +118,7 @@ function generateHtml(svInfo, dsDiemHocKy) {
             <th>Điểm tk số</th>
             <th>Điểm tk chữ</th>
             <th>Kết quả</th>
-            <th>Trọng số, điểm</th>
+            <th>Điểm thành phần</th>
             `;
 
         html += '</tr>';
