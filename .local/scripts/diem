@@ -133,13 +133,16 @@ function generateHtml(svInfo, dsDiemHocKy) {
             html += '<td>' + (monHoc.diem_tk_so ?? '') + '</td>';
             html += '<td>' + (monHoc.diem_tk_chu ?? '') + '</td>';
             html += '<td>' + (monHoc.ket_qua ? 'Đạt' : 'Không đạt') + '</td>';
-            html += '<td>';
+            html += '<td style="text-align: center;">';
             if (
                 monHoc.ds_diem_thanh_phan &&
                 monHoc.ds_diem_thanh_phan.length > 0
             ) {
+                html += `<dialog id=${monHoc.ma_mon}>`;
+                html += `<h3>${monHoc.ma_mon} - ${monHoc.ten_mon}</h3>`;
+                // table diem tp
                 html += `
-                <table border="1">
+                <table border="1" style="width: 100%">
                     <thead>
                         <tr>
                             <th>Thành phần</th>
@@ -157,6 +160,30 @@ function generateHtml(svInfo, dsDiemHocKy) {
                     html += '</tr>';
                 });
                 html += '</tbody></table>';
+                /////////////////////////////
+                html += `
+                        <button
+                            style="margin-top: 20px"
+                            onclick="document.getElementById('${monHoc.ma_mon}').close()"
+                        >
+                            Đóng
+                        </button>`;
+
+                html += '</dialog>';
+
+                html += `
+                    <button
+                        style="
+                            font-weight: bold;
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+                            "
+                        onclick="document.getElementById('${monHoc.ma_mon}').showModal()"
+                    >
+                        Chi tiết
+                    </button>
+                `;
             }
 
             html += '</td>';
