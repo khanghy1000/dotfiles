@@ -9,12 +9,13 @@ end)
 local config = wezterm.config_builder()
 
 config.font = wezterm.font('JetBrainsMono NF', { weight = 'Medium', italic = false })
-config.font_size = 12
+config.font_size = 10
 config.freetype_load_target = 'Light'
 config.cell_width = 0.9
 
 config.enable_tab_bar = false
--- config.window_decorations = "RESIZE"
+-- config.window_decorations = 'RESIZE'
+config.enable_wayland = false
 config.window_background_opacity = 0.95
 config.window_close_confirmation = 'NeverPrompt'
 
