@@ -28,6 +28,15 @@ if command -v apt-get >/dev/null 2>&1; then
         sudo apt-get -y --ignore-missing install "$pkg"
     done
 
+# zypper
+elif command -v zypper >/dev/null 2>&1; then
+    sudo zypper refresh
+    sudo zypper update -y -l
+
+    for pkg in "${pkgs[@]}"; do
+	sudo zypper install -y -l "$pkg"
+    done
+
 # pacman
 elif command -v pacman >/dev/null 2>&1; then
     sudo pacman -Syu --noconfirm
