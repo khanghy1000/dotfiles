@@ -40,7 +40,7 @@ config.window_padding = {
   left = '1cell',
   right = '1cell',
   top = '0cell',
-  bottom = '1cell',
+  bottom = '0cell',
 }
 
 config.keys = {
