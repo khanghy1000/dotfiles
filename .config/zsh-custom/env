@@ -63,7 +63,7 @@ export _ZO_RESOLVE_SYMLINKS=
 
 # Custom paths
 addToPathFront $HOME/.local/scripts
-addToPath /opt/nvim-linux64/bin
+addToPath /opt/nvim-linux-x86_64/bin
 addToPath $HOME/.local/share/JetBrains/Toolbox/scripts
 
 # Key bindings
