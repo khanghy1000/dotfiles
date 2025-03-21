@@ -10,8 +10,8 @@
 # NOTE: Written for Ubuntu question:
 #       https://askubuntu.com/q/1045624/307523
 
-WatchDriver="/sys/class/backlight/nvidia_0/brightness"
-PatchDriver="/sys/class/backlight/amdgpu_bl1/brightness"
+WatchDriver="/sys/class/backlight/nvidia_0"
+PatchDriver="/sys/class/backlight/amdgpu_bl1"
 
 # Must be running as sudo
 if [[ $(id -u) != 0 ]]; then
