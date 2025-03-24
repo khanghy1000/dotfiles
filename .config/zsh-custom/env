@@ -65,6 +65,7 @@ export _ZO_RESOLVE_SYMLINKS=
 addToPathFront $HOME/.local/scripts
 addToPath /opt/nvim-linux-x86_64/bin
 addToPath $HOME/.local/share/JetBrains/Toolbox/scripts
+addToPath $HOME/.dotnet/tools
 
 # Key bindings
 bindkey -e
