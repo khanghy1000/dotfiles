@@ -106,7 +106,7 @@ nnoremap ga :action GotoAction<CR>
 
 nnoremap za :action ExpandCollapseToggleAction<CR>
 
-nnoremap :w<CR> :action Macro.save_macro<CR>
-vnoremap :w<CR> :action Macro.save_macro<CR>
+"nnoremap :w<CR> :action Macro.save_macro<CR>
+"vnoremap :w<CR> :action Macro.save_macro<CR>
 
 command! Bd action CloseAllUnpinnedEditors
