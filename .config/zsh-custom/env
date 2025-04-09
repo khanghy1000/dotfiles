@@ -87,3 +87,5 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
+
+zle_highlight=('paste:none')

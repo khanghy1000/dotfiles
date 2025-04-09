@@ -19,7 +19,7 @@ config.enable_wayland = false
 config.window_background_opacity = 0.95
 config.window_close_confirmation = 'NeverPrompt'
 
-config.color_scheme = 'Aura (Gogh)'
+config.color_scheme = 'Catppuccin Macchiato'
 config.colors = {
   background = '#151515',
 }
