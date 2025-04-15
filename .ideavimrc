@@ -91,18 +91,19 @@ nnoremap <leader>sf :action GotoFile<CR>
 nnoremap <leader>/ :action CommentByLineComment<CR>
 vnoremap <leader>/ :action CommentByLineComment<CR>
 
-nnoremap <leader>ca :action ShowIntentionActions<CR>
-
-nnoremap <leader>la :action Refactorings.QuickListPopupAction<CR>
 
 nnoremap <leader>fm :action ReformatCode<CR> :action OptimizeImports<CR>
 
 nnoremap <leader>a :action PinActiveTab<CR>
 
-nnoremap <leader>ls :action GotoSymbol<CR>
-nnoremap gd :action GotoDeclaration<CR>
-nnoremap gI :action GotoImplementation<CR>
+nnoremap grf :action Refactorings.QuickListPopupAction<CR>
+nnoremap gra :action ShowIntentionActions<CR>
+nnoremap gW :action GotoSymbol<CR>
+nnoremap grd :action GotoDeclaration<CR>
+nnoremap gri :action GotoImplementation<CR>
 nnoremap ga :action GotoAction<CR>
+nnoremap grn :action RenameElement<CR>
+nnoremap grt :action GotoTypeDeclaration<CR>
 
 nnoremap za :action ExpandCollapseToggleAction<CR>
 

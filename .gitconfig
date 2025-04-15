@@ -10,3 +10,4 @@
 [core]
 	eol = lf
 	autocrlf = input
+	fsmonitor = true
