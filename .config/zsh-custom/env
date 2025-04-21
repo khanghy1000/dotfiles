@@ -7,7 +7,6 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_COMPLETION_IGNORE="psql *"
 export YAZI_CONFIG_HOME=$XDG_CONFIG_HOME/yazi
 export _ZO_RESOLVE_SYMLINKS=
-export IBUS_ENABLE_SYNC_MODE=2
 
 addToPathFront $HOME/.local/scripts
 addToPath /opt/nvim-linux-x86_64/bin
