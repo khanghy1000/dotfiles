@@ -12,3 +12,4 @@ source $ZSH_CONFIG/alias
 source $HOME/.local/scripts/wezterm.sh
 
 clear
+
