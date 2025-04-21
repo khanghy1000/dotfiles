@@ -14,22 +14,23 @@ addToPathFront() {
 }
 
 venv() {
-    if ! command -v python3 >/dev/null 2>&1; then
-        if ! command -v python >/dev/null 2>&1; then
-            echo "Python not found."
-            return
-        fi
+    if ! command -v python3 >/dev/null 2>&1 && ! command -v python >/dev/null 2>&1; then
+        echo "Python not found."
+        return
     fi
 
-    if [[ ! -f ./.venv/Scripts/activate ]]; then
-        if command -v python3 >/dev/null 2>&1; then
-            python3 -m venv .venv
-        else
-            python -m venv .venv
-        fi
+    if [[ ! -f .venv/bin/activate && ! -f .venv/Scripts/activate ]]; then
+        python3 -m venv .venv || python -m venv .venv
         echo "Virtual environment created."
     fi
-    source ./.venv/Scripts/activate
+
+    if [[ -f .venv/bin/activate ]]; then
+        source .venv/bin/activate
+    elif [[ -f .venv/Scripts/activate ]]; then
+        source .venv/Scripts/activate
+    else
+        echo "Activation script not found."
+    fi
 }
 
 ff() {
@@ -40,14 +41,24 @@ ff() {
         return
     fi
 
-    z -- "$selected"
+    system_type=$(uname -s)
+    if [[ "$system_type" = "Linux" ]]; then
+        z "$selected"
+    else
+        z -- "$selected"
+    fi
 }
 
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
     yazi "$@" --cwd-file="$tmp"
+    system_type=$(uname -s)
     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        z -- "$cwd"
+        if [[ "$system_type" = "Linux" ]]; then
+            z "$cwd"
+        else
+            z -- "$cwd"
+        fi
     fi
     rm -f -- "$tmp"
 }
