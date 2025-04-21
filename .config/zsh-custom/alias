@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+alias v="nvim"
 alias gg="lazygit"
 alias yadmauto="yadm add -u && yadm commit -m 'Auto commit' && yadm push"
 alias ls='ls --color=tty --group-directories-first'
