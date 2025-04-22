@@ -15,5 +15,3 @@ source $HOME/.local/scripts/wezterm.sh
 
 clear
 
-
-PATH=~/.console-ninja/.bin:$PATH
