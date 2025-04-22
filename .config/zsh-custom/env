@@ -6,6 +6,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_COMPLETION_IGNORE="psql *"
 export YAZI_CONFIG_HOME=$XDG_CONFIG_HOME/yazi
+export BAT_THEME="Visual Studio Dark+"
 export _ZO_RESOLVE_SYMLINKS=
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --color=fg:-1,fg+:#cec2aa,bg:-1,bg+:-1,gutter:-1
