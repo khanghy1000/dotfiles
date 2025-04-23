@@ -61,3 +61,14 @@ y() {
     fi
     rm -f -- "$tmp"
 }
+
+vh() {
+    local repo="$HOME/.config/nvim"
+    local tmpdir="$HOME/tmp/nvim"
+
+    [[ -d "$tmpdir" ]] && git -C "$repo" worktree remove --force "$tmpdir"
+    git -C "$repo" worktree add "$tmpdir" HEAD || return
+    nvim -u "$tmpdir/init.lua" --cmd "set runtimepath^=$tmpdir"
+    git -C "$repo" worktree remove --force "$tmpdir"
+}
+
