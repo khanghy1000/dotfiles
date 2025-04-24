@@ -7,6 +7,7 @@ alias ls='ls --color=tty --group-directories-first'
 alias tree="tree -C -I 'node_modules|dist'"
 alias ts="tmux-sessionizer"
 alias rshada="rm -rf $HOME/AppData/Local/nvim-data/shada/* && rm -rf $HOME/.local/share/nvim/shada/*"
+alias yadmgg='lazygit -ucf "$HOME/.config/yadm/lazygit.yaml,$HOME/.config/lazygit/config.yml" -w ~ -g ~/.local/share/yadm/repo.git'
 
 if command -v batcat >/dev/null 2>&1; then
     alias bat="batcat"
