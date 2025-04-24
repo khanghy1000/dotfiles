@@ -33,8 +33,10 @@ venv() {
 }
 
 ff() {
-    dirs=($HOME/repos $HOME/projects)
-    selected=$(find "${dirs[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
+    typeset -a dirs
+    dirs=( "${(@f)$(find -L "$HOME/repos" "$HOME/projects" "$HOME/.config" -mindepth 1 -maxdepth 1 -type d)}" )
+    dirs+=( "$HOME" "$HOME/Downloads" "$HOME/Documents" )
+    selected=$(print -rl -- "${dirs[@]}" | fzf)
 
     if [[ -z $selected ]]; then
         return
