@@ -14,4 +14,3 @@ source $ZSH_CONFIG/keymap
 source $HOME/.local/scripts/wezterm.sh
 
 clear
-

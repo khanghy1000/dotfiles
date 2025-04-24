@@ -19,6 +19,11 @@ addToPath /opt/nvim-linux-x86_64/bin
 addToPath $HOME/.local/share/JetBrains/Toolbox/scripts
 addToPath $HOME/.dotnet/tools
 
+
+if command -v go >/dev/null 2>&1; then
+  addToPathFront "$(go env GOPATH)/bin"
+fi
+
 # pnpm
 export PNPM_HOME="/home/hy/.local/share/pnpm"
 case ":$PATH:" in
