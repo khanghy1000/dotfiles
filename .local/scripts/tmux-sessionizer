@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    mapfile -t dirs < <(find -L "$HOME/repos" "$HOME/projects" "$HOME/.config" -mindepth 1 -maxdepth 1 -type d)
+    mapfile -t dirs < <(find -L "$HOME/repos" "$HOME/projects" "$HOME/.config" -mindepth 1 -maxdepth 2 -type d)
     dirs+=("$HOME" "$HOME/Downloads" "$HOME/Documents")
     selected=$(printf "%s\n" "${dirs[@]}" | fzf)
 fi
@@ -15,7 +15,8 @@ fi
 if [[ $selected == "$HOME" ]]; then
     selected_name=$HOME
 else
-    selected_name=$(basename "$selected" | tr . _)
+    selected_name=$(basename "$(dirname "$selected")")/$(basename "$selected")
+    selected_name=$(echo "$selected_name" | tr . _)
 fi
 
 tmux_running=$(pgrep tmux)
