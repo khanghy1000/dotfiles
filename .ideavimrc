@@ -91,7 +91,6 @@ nnoremap <leader>sf :action GotoFile<CR>
 nnoremap <leader>/ :action CommentByLineComment<CR>
 vnoremap <leader>/ :action CommentByLineComment<CR>
 
-
 nnoremap <leader>fm :action ReformatCode<CR> :action OptimizeImports<CR>
 
 nnoremap <leader>a :action PinActiveTab<CR>
@@ -104,6 +103,11 @@ nnoremap gri :action GotoImplementation<CR>
 nnoremap ga :action GotoAction<CR>
 nnoremap grn :action RenameElement<CR>
 nnoremap grt :action GotoTypeDeclaration<CR>
+
+nnoremap [d :action GotoPreviousError<CR>
+nnoremap ]d :action GotoNextError<CR>
+nnoremap <leader>db :action ActivateProblemsViewToolWindow<CR>
+nnoremap <leader>dw :action ActivateProblemsViewToolWindow<CR>
 
 nnoremap za :action ExpandCollapseToggleAction<CR>
 
