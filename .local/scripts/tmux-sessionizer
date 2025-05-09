@@ -3,8 +3,9 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    mapfile -t dirs < <(find -L "$HOME/repos" "$HOME/projects" "$HOME/.config" -mindepth 1 -maxdepth 2 -type d)
-    dirs=("$HOME" "$HOME/Downloads" "$HOME/Documents" "${dirs[@]}")
+    mapfile -t repo_dirs < <(find -L "$HOME/repos" "$HOME/projects" -mindepth 1 -maxdepth 2 -type d)
+    mapfile -t config_dirs < <(find -L "$HOME/.config" -mindepth 1 -maxdepth 1 -type d)
+    dirs=("$HOME" "$HOME/Downloads" "$HOME/Documents" "${repo_dirs[@]}" "${config_dirs[@]}")
     selected=$(printf "%s\n" "${dirs[@]}" | fzf)
 fi
 
