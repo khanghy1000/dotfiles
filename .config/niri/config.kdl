@@ -605,7 +605,7 @@ window-rule {
     match app-id="jetbrains"
     match app-id="google-chrome"
     match app-id="wezterm"
-    match app-id="steam" title="Steam"
+    match app-id="steam" title="^Steam&"
     match app-id="Code"
     open-maximized true
 }
