@@ -605,7 +605,7 @@ window-rule {
     match app-id="jetbrains"
     match app-id="google-chrome"
     match app-id="wezterm"
-    match app-id="steam"
+    match app-id="steam" title="Steam"
     match app-id="Code"
     open-maximized true
 }
@@ -617,6 +617,8 @@ window-rule {
     match app-id="blueman-manager"
     match app-id="jetbrains" title="Settings"
     match app-id="jetbrains" title="Confirm Exit"
+    match app-id="steam"
+    exclude app-id="steam" title="^Steam&"
     open-floating true
 }
 
