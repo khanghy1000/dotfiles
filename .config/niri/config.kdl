@@ -607,6 +607,7 @@ window-rule {
     match app-id="wezterm"
     match app-id="steam" title="^Steam&"
     match app-id="Code"
+    match app-id="Celluloid"
     open-maximized true
 }
 
