@@ -5,9 +5,9 @@
   "exclusive": true,
   "passthrough": false,
   "gtk-layer-shell": true,
-  "margin-top": 7,
-  "margin-left": 7,
-  "margin-right": 7,
+  "margin-top": 8,
+  "margin-left": 8,
+  "margin-right": 8,
   "margin-bottom": 0,
   "modules-left": [
     "custom/launcher",
