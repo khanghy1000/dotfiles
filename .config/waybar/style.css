@@ -5,14 +5,11 @@
 }
 
 window#waybar {
-  background: none;
-  background: black;
   color: white;
-}
-
-tooltip {
-  background: rgba(30, 30, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: none;
+  /* background: black; */
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 0.5em;
 }
 
 #custom-launcher,
@@ -29,11 +26,15 @@ tooltip {
 #workspaces,
 #window,
 #tray {
-  background: black;
   padding: 0.5em 0.75em;
   border-radius: 0.5em;
-  opacity: 0.75;
-  /* margin-top: 0.75em; */
+  /* opacity: 0.75; */
+  /* background: black; */
+}
+
+tooltip {
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #taskbar {
