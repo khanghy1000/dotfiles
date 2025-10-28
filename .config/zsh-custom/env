@@ -19,7 +19,7 @@ addToPathFront $HOME/.local/bin
 addToPath /opt/nvim-linux-x86_64/bin
 addToPath $HOME/.local/share/JetBrains/Toolbox/scripts
 addToPath $HOME/.dotnet/tools
-
+addToPath $HOME/.cargo/bin
 if command -v go >/dev/null 2>&1; then
   addToPathFront "$(go env GOPATH)/bin"
 fi
