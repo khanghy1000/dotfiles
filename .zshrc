@@ -11,5 +11,9 @@ source $ZSH_CONFIG/env
 source $ZSH_CONFIG/alias
 source $ZSH_CONFIG/keymap
 
+if [ -f "$HOME/.secrets" ]; then
+    source "$HOME/.secrets"
+fi
+
 source $HOME/.local/scripts/wezterm.sh
 
