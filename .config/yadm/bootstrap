@@ -16,7 +16,7 @@ echo -e "${GREEN}Installing packages...${ENDCOLOR}"
 echo
 
 pkgs=(zsh curl git make zip unzip gcc ripgrep xclip base-devel tmux fzf
-    openssh openssh-client openssh-server bat tree jq neovim yazi
+    openssh openssh-client openssh-server bat tree jq neovim yazi uv
     ffmpegthumbnailer p7zip poppler fd zoxide imagemagick inotify-tools btop
     fastfetch blueman network-manager-applet pamixer pavucontrol)
 
@@ -60,7 +60,7 @@ elif command -v dnf >/dev/null 2>&1; then
     for pkg in "${pkgs[@]}"; do
         sudo dnf install -y --skip-unavailable "$pkg"
     done
-    fi
+fi
 
 echo
 echo -e "${GREEN}Installing JetBrainsMono Nerd Font...${ENDCOLOR}"
