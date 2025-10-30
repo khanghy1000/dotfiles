@@ -16,7 +16,7 @@ echo -e "${GREEN}Installing packages...${ENDCOLOR}"
 echo
 
 pkgs=(zsh curl git make zip unzip gcc ripgrep xclip base-devel tmux fzf
-    openssh openssh-client openssh-server bat tree jq neovim yazi uv
+    openssh openssh-client openssh-server bat tree jq neovim yazi uv zig
     ffmpegthumbnailer p7zip poppler fd zoxide imagemagick inotify-tools btop
     fastfetch blueman network-manager-applet pamixer pavucontrol)
 
