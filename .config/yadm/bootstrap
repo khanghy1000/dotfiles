@@ -15,51 +15,70 @@ echo
 echo -e "${GREEN}Installing packages...${ENDCOLOR}"
 echo
 
-pkgs=(zsh curl git make zip unzip gcc ripgrep xclip base-devel tmux fzf
+pkgs=(fish zsh curl git make zip unzip gcc ripgrep xclip base-devel tmux fzf
     openssh openssh-client openssh-server bat tree jq neovim yazi uv zig
     ffmpegthumbnailer p7zip poppler fd zoxide imagemagick inotify-tools btop
     fastfetch blueman network-manager-applet pamixer pavucontrol)
 
-# apt
-if command -v apt-get >/dev/null 2>&1; then
-    sudo apt-get update
-    sudo apt-get upgrade -y
+# Load distribution info
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+else
+    ID="unknown"
+    ID_LIKE="unknown"
+fi
 
-    for pkg in "${pkgs[@]}"; do
-        sudo apt-get -y --ignore-missing install "$pkg"
-    done
+CMD_UPDATE=""
+CMD_INSTALL=""
+PKG_MANAGER=""
 
-# zypper
-elif command -v zypper >/dev/null 2>&1; then
-    sudo zypper refresh
-    sudo zypper update -y -l
+# Detect Package Manager
+if [[ "$ID" == "ubuntu" || "$ID" == "linuxmint" || "$ID" == "debian" || "$ID_LIKE" == *"debian"* ]] || command -v apt-get >/dev/null 2>&1; then
+    PKG_MANAGER="apt"
+    CMD_UPDATE="sudo apt-get update && sudo apt-get upgrade -y"
+    CMD_INSTALL="sudo apt-get -y --ignore-missing install"
 
-    for pkg in "${pkgs[@]}"; do
-	sudo zypper install -y -l "$pkg"
-    done
+elif [[ "$ID" == "fedora" || "$ID" == "rhel" || "$ID_LIKE" == *"fedora"* ]] || command -v dnf >/dev/null 2>&1; then
+    PKG_MANAGER="dnf"
+    CMD_UPDATE="sudo dnf upgrade --refresh -y"
+    CMD_INSTALL="sudo dnf install -y --skip-unavailable"
 
-# pacman
-elif command -v pacman >/dev/null 2>&1; then
-    sudo pacman -Syu --noconfirm
+elif [[ "$ID" == "arch" || "$ID" == "endeavouros" || "$ID_LIKE" == *"arch"* ]] || command -v pacman >/dev/null 2>&1; then
+    PKG_MANAGER="pacman"
+    CMD_UPDATE="sudo pacman -Syu --noconfirm"
+    CMD_INSTALL="sudo pacman -S --needed --noconfirm"
 
-    for pkg in "${pkgs[@]}"; do
-        sudo pacman -S --needed --noconfirm "$pkg"
-    done
+elif [[ "$ID" == "opensuse" || "$ID_LIKE" == *"suse"* ]] || command -v zypper >/dev/null 2>&1; then
+    PKG_MANAGER="zypper"
+    CMD_UPDATE="sudo zypper refresh && sudo zypper update -y -l"
+    CMD_INSTALL="sudo zypper install -y -l"
+else
+    echo -e "${RED}Unsupported distribution or package manager not found!${ENDCOLOR}"
+    exit 1
+fi
 
-    if ! command -v yay >/dev/null 2>&1; then
-        echo -e "${GREEN}Installing yay...${ENDCOLOR}"
-        git clone https://aur.archlinux.org/yay.git
-        cd yay
-        makepkg -si
+echo -e "${GREEN}Detected package manager: $PKG_MANAGER${ENDCOLOR}"
+
+# Run Update
+echo -e "${GREEN}Updating system...${ENDCOLOR}"
+eval "$CMD_UPDATE"
+
+# Run Install Loop
+echo -e "${GREEN}Installing software list...${ENDCOLOR}"
+for pkg in "${pkgs[@]}"; do
+    $CMD_INSTALL "$pkg"
+done
+
+# Arch-specific: Install paru
+if [[ "$PKG_MANAGER" == "pacman" ]]; then
+    if ! command -v paru >/dev/null 2>&1; then
+        echo -e "${GREEN}Installing paru...${ENDCOLOR}"
+        git clone https://aur.archlinux.org/paru.git
+        cd paru
+        makepkg -si --noconfirm
+        cd ..
+        rm -rf paru
     fi
-
-# dnf
-elif command -v dnf >/dev/null 2>&1; then
-    sudo dnf upgrade --refresh -y
-
-    for pkg in "${pkgs[@]}"; do
-        sudo dnf install -y --skip-unavailable "$pkg"
-    done
 fi
 
 echo
@@ -89,18 +108,28 @@ echo
 curl -sS https://starship.rs/install.sh | sh
 
 echo
-echo -e "${GREEN}Setting up zsh...${ENDCOLOR}"
+echo -e "${GREEN}Setting up shell...${ENDCOLOR}"
 echo
 
 ZSH_PATH=$(which zsh)
+FISH_PATH=$(which fish)
 
-if [[ $ZSH_PATH =~ "sbin" ]]; then
-    ZSH_PATH="${ZSH_PATH//sbin/bin}"
-    echo -e "${YELLOW}warning:${ENDCOLOR} zsh path includes 'sbin'. Trying to change shell to $ZSH_PATH..."
+if [[ $FISH_PATH =~ "sbin" ]]; then
+    FISH_PATH="${FISH_PATH//sbin/bin}"
+    echo -e "${YELLOW}warning:${ENDCOLOR} shell path includes 'sbin'. Trying to change shell to $ZSH_PATH..."
 fi
 
-chsh -s $ZSH_PATH
+chsh -s $FISH_PATH
+
+echo
+echo -e "${GREEN}Installing antidote...${ENDCOLOR}"
+echo
 git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+
+echo
+echo -e "${GREEN}Installing Fisher...${ENDCOLOR}"
+echo
+fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
 
 echo
 echo "----------------------------------------"

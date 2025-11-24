@@ -3,7 +3,7 @@
 alias v="nvim"
 alias gg="lazygit"
 alias yadmauto="yadm add -u && yadm commit -m 'Sync dotfiles' && yadm push"
-alias tree="tree -Ca --dirsfirst -I 'node_modules|dist|build|out|target|.venv|bin|obj|.idea|.git/' | less -FRi"
+alias tree="tree -Ca --dirsfirst -I 'node_modules|dist|build|out|target|.venv|bin|obj|.idea|.git/'"
 alias ts="tmux-sessionizer"
 alias rshada="rm -rf $HOME/AppData/Local/nvim-data/shada/* && rm -rf $HOME/.local/share/nvim/shada/*"
 alias yadmgg='lazygit -ucf $HOME/.config/lazygit/config.yml -w ~ -g ~/.local/share/yadm/repo.git'
