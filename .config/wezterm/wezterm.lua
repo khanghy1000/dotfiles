@@ -66,7 +66,7 @@ config.keys = {
 -- Platform-specific configs
 -- Windows
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' or wezterm.target_triple == 'x86_64-pc-windows-gnu' then
-  config.default_prog = { 'C:/msys64/msys2_shell.cmd', '-defterm', '-here', '-no-start', '-ucrt64', '-shell', 'zsh' }
+  config.default_prog = { 'C:/msys64/msys2_shell.cmd', '-defterm', '-here', '-no-start', '-ucrt64', '-shell', 'fish' }
 
   config.launch_menu = {
     {
