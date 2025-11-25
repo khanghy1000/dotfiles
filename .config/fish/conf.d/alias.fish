@@ -12,7 +12,7 @@ alias tree "tree -Ca --dirsfirst -I 'node_modules|dist|build|out|target|.venv|bi
 alias ts "tmux-sessionizer"
 alias yadmgg 'lazygit -ucf $HOME/.config/lazygit/config.yml -w ~ -g ~/.local/share/yadm/repo.git'
 
-alias rshada "rm -rf $HOME/AppData/Local/nvim-data/shada/* 2>/dev/null; and rm -rf $HOME/.local/share/nvim/shada/* 2>/dev/null"
+alias rshada "rm -rf $HOME/AppData/Local/nvim-data/shada $HOME/.local/share/nvim/shada"
 
 # Eza (ls replacement)
 alias ls 'eza -al --color=always --group-directories-first --icons'
@@ -25,7 +25,3 @@ if type -q batcat
     alias bat "batcat"
 end
 
-function last_history_item
-    echo $history[1]
-end
-abbr -a !! --position anywhere --function last_history_item
