@@ -1,12 +1,15 @@
 #!/usr/bin/env zsh
 
 bindkey -e
-bindkey -s '^f' "^Qts\n"
 bindkey '^[[A' history-substring-search-up
 bindkey '^[OA' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey '^[OB' history-substring-search-down
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
+# Ctrl+Backspace
 bindkey '^H' backward-kill-word
+# Ctrl+Delete
 bindkey '5~' kill-word
+# Ctrl+f
+bindkey -s '^f' "^Qts\n"

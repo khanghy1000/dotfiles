@@ -58,3 +58,12 @@ function vh
     
     git -C "$repo" worktree remove --force "$tmpdir"
 end
+
+function fish_user_key_bindings
+    # Ctrl+f
+    bind \cf 'commandline "ts"; commandline -f execute'
+    # Ctrl+Backspace
+    bind \cH backward-kill-word
+    # Ctrl+Delete
+    bind \e\[3\;5~ kill-word
+end
