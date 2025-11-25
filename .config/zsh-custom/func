@@ -43,23 +43,21 @@ ff() {
         return
     fi
 
-    system_type=$(uname -s)
-    if [[ "$system_type" = "Linux" ]]; then
-        z "$selected"
-    else
+    if [[ -v MSYSTEM ]]; then
         z -- "$selected"
+    else
+        z "$selected"
     fi
 }
 
 y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
     yazi "$@" --cwd-file="$tmp"
-    system_type=$(uname -s)
     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        if [[ "$system_type" = "Linux" ]]; then
-            z "$cwd"
-        else
+        if [[ -v MSYSTEM ]]; then
             z -- "$cwd"
+        else
+            z "$cwd"
         fi
     fi
     rm -f -- "$tmp"
