@@ -70,6 +70,10 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' or wezterm.target_triple ==
 
   config.launch_menu = {
     {
+      label = 'fish',
+      args = { 'C:/msys64/msys2_shell.cmd', '-defterm', '-here', '-no-start', '-mingw64', '-shell', 'fish' },
+    },
+    {
       label = 'zsh',
       args = { 'C:/msys64/msys2_shell.cmd', '-defterm', '-here', '-no-start', '-mingw64', '-shell', 'zsh' },
     },
