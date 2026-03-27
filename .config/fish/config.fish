@@ -5,9 +5,9 @@ if status is-interactive
     fzf --fish | source
 
     # VS Code Shell Integration
-    if set -q MSYSTEM; and type -q cygpath; and test "$TERM_PROGRAM" = "vscode"
-        source (cygpath -u (code --locate-shell-integration-path fish))
-    end
+    # if set -q MSYSTEM; and type -q cygpath; and test "$TERM_PROGRAM" = "vscode"
+    #     source (cygpath -u (code --locate-shell-integration-path fish))
+    # end
 
     if set -q MSYSTEM; and type -q cygpath
         function __fish_update_cwd_osc --on-variable PWD --description 'Notify terminals when $PWD changes'
