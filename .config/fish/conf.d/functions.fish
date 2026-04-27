@@ -1,20 +1,25 @@
 function venv
+    set -l venv_dir $argv[1]
+    if test -z "$venv_dir"
+        set venv_dir ".venv"
+    end
+
     if not type -q uv
         echo "uv not found."
         return
     end
 
-    if not test -f .venv/bin/activate.fish; and not test -f .venv/Scripts/activate.fish
-        uv venv
-        echo "Virtual environment created."
+    if not test -f "$venv_dir/bin/activate.fish"; and not test -f "$venv_dir/Scripts/activate.fish"
+        uv venv "$venv_dir"
+        echo "Virtual environment created in '$venv_dir'."
     end
 
-    if test -f .venv/bin/activate.fish
-        source .venv/bin/activate.fish
-    else if test -f .venv/Scripts/activate.fish
-        source .venv/Scripts/activate.fish
+    if test -f "$venv_dir/bin/activate.fish"
+        source "$venv_dir/bin/activate.fish"
+    else if test -f "$venv_dir/Scripts/activate.fish"
+        source "$venv_dir/Scripts/activate.fish"
     else
-        echo "Activation script not found (looked for activate.fish)."
+        echo "Activation script not found (looked in '$venv_dir')."
     end
 end
 
