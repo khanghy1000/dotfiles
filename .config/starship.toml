@@ -9,3 +9,6 @@ fish_style_pwd_dir_length = 3
 
 [git_status]
 disabled = true
+
+[time]
+disabled = false
