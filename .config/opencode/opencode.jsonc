@@ -22,15 +22,6 @@
     "external_directory": "ask"
   },
   "mcp": {
-    "sequentialthinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "enabled": false
-    },
     "playwright": {
       "type": "local",
       "command": ["npx", "@playwright/mcp@latest"],
