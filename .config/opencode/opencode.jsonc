@@ -34,6 +34,11 @@
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       },
       "enabled": true
-    }
+    },
+    "ghidra": {
+      "type": "local",
+      "command": ["uv", "run", "--directory", "D:\\repos\\ghidra-mcp", "bridge-mcp-ghidra"],
+      "enabled": true,
+    },
   }
 }
